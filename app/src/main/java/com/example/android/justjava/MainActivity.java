@@ -10,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import java.text.NumberFormat;
-
 /**
  * This app displays an order form to order coffee.
  */
@@ -29,14 +27,19 @@ public class MainActivity extends AppCompatActivity {
      */
     public void submitOrder(View view) {
         int price = calculatePrice();
-        displayMessage(priceMessage);
+        displayMessage(createOrderSummary(price));
     }
 
+    /**
+     * Create a summary of the order
+     * @param price refers to calculatePrice method which is quantity * 5
+     * @return order summary
+     */
     private String createOrderSummary(int price){
         String priceMessage = "Name: Ammar J";
-        priceMessage = "Quantity" + quantity;
-        priceMessage = "Total: $" + price;
-        priceMessage = "\nThank you!";
+        priceMessage += "\nQuantity: " + quantity;
+        priceMessage += "\nTotal: $" + price;
+        priceMessage += "\nThank you!";
         return  priceMessage;
     }
 
@@ -46,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
      */
 
     private int calculatePrice() {
-        int price = quantity * 5;
-        return price;
+        return quantity * 5;
     }
 
     public void increment(View view) {
@@ -68,17 +70,11 @@ public class MainActivity extends AppCompatActivity {
         quantityTextView.setText("" + tal);
     }
 
-
-    private void displayPrice(int number) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
-    }
-
     /**
      * This method displays the given text on the screen.
      */
     private void displayMessage(String message) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText(message);
+        TextView orderSummaryTextView = (TextView) findViewById(R.id.order_summary_text_view);
+        orderSummaryTextView.setText(message);
     }
 }
